@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cohere Chatbot</title>
+</head>
+<body>
+  <h2>Multi-Persona Chatbot</h2>
+  <select id="persona">
+    <option>Doctor</option>
+    <option>Travel Agent</option>
+    <option>Teacher</option>
+    <option>Tech Support</option>
+  </select><br><br>
+  <textarea id="userMessage" rows="4" cols="50"></textarea><br>
+  <button onclick="sendMessage()">Send</button>
+  <h3>Reply:</h3>
+  <p id="reply"></p>
+
+  <script>
+    function sendMessage() {
+      const message = document.getElementById('userMessage').value;
+      const persona = document.getElementById('persona').value;
+
+      fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, persona })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('reply').innerText = data.reply;
+      });
+    }
+  </script>
+</body>
+</html>
